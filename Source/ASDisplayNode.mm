@@ -450,6 +450,7 @@ ASSynthesizeLockingMethodsWithMutex(__instanceLock__);
         ASPerformBlockOnMainThread(^{
           self->__instanceLock__.lock();
           CGFloat cornerRadius = self->_cornerRadius;
+          UIColor *clipColor = self->_clipColor;
           ASCornerRoundingType cornerRoundingType = self->_cornerRoundingType;
           UIColor *backgroundColor = self->_backgroundColor;
           self->__instanceLock__.unlock();
@@ -466,7 +467,7 @@ ASSynthesizeLockingMethodsWithMutex(__instanceLock__);
 
           // If we have clipping corners, re-render the clipping corner layer upon user interface style change
           if (cornerRoundingType == ASCornerRoundingTypeClipping && cornerRadius > 0.0f) {
-            [self _updateClipCornerLayerContentsWithRadius:cornerRadius backgroundColor:backgroundColor];
+            [self _updateClipCornerLayerContentsWithRadius:cornerRadius clipColor:clipColor];
           }
           
           [self setNeedsDisplay];
@@ -1489,7 +1490,7 @@ void recursivelyTriggerDisplayForLayer(CALayer *layer, BOOL shouldBlock)
   }
 }
 
-- (void)_updateClipCornerLayerContentsWithRadius:(CGFloat)radius backgroundColor:(UIColor *)backgroundColor
+- (void)_updateClipCornerLayerContentsWithRadius:(CGFloat)radius clipColor:(UIColor*)clipColor
 {
   ASPerformBlockOnMainThread(^{
     for (int idx = 0; idx < NUM_CLIP_CORNER_LAYERS; idx++) {
@@ -1515,7 +1516,7 @@ void recursivelyTriggerDisplayForLayer(CALayer *layer, BOOL shouldBlock)
         UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, radius * 2, radius * 2) cornerRadius:radius];
         [roundedRect setUsesEvenOddFillRule:YES];
         [roundedRect appendPath:[UIBezierPath bezierPathWithRect:CGRectMake(-1, -1, radius * 2 + 1, radius * 2 + 1)]];
-        [backgroundColor setFill];
+        [clipColor setFill];
         [roundedRect fill];
       });
 
@@ -1551,7 +1552,7 @@ void recursivelyTriggerDisplayForLayer(CALayer *layer, BOOL shouldBlock)
         self->_clipCornerLayers[idx] = nil;
       }
     }
-    [self _updateClipCornerLayerContentsWithRadius:self->_cornerRadius backgroundColor:self.backgroundColor];
+    [self _updateClipCornerLayerContentsWithRadius:self->_cornerRadius clipColor:self->_clipColor];
   });
 }
 

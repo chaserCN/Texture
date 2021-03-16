@@ -153,6 +153,9 @@ static constexpr CACornerMask kASCACornerAllCorners =
   // Dynamic colors support
   UIColor *_backgroundColor;
 
+  // Color for clip corners
+  UIColor *_clipColor;
+  
 @protected
   ASDisplayNode * __weak _supernode;
   NSMutableArray<ASDisplayNode *> *_subnodes;

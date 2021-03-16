@@ -834,6 +834,12 @@ if (shouldApply) { _layer.layerProperty = (layerValueExpr); } else { ASDisplayNo
     // ignore this, allow subclasses to be notified
 }
 
+- (void)setClipColor:(UIColor *)color
+{
+  _bridge_prologue_write;
+  _clipColor = color;
+}
+
 - (CGColorRef)shadowColor
 {
   _bridge_prologue_read;
