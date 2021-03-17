@@ -706,6 +706,8 @@ ASDK_EXTERN NSInteger const ASDefaultDrawingPriority;
 
 @property (null_resettable, copy) UIColor *tintColor;          // default=Blue
 
+- (void)setClipColor:(UIColor *)color;
+
 /**
  * Notifies the node when the tintColor has changed.
  *
