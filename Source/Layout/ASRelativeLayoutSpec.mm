@@ -17,6 +17,19 @@
 
 - (instancetype)initWithHorizontalPosition:(ASRelativeLayoutSpecPosition)horizontalPosition verticalPosition:(ASRelativeLayoutSpecPosition)verticalPosition sizingOption:(ASRelativeLayoutSpecSizingOption)sizingOption child:(id<ASLayoutElement>)child
 {
+  return [self initWithHorizontalPosition:horizontalPosition
+                         verticalPosition:verticalPosition
+                             sizingOption:sizingOption
+                proportionForAxisPosition:0.5
+                                    child:child];
+}
+
+- (instancetype)initWithHorizontalPosition:(ASRelativeLayoutSpecPosition)horizontalPosition
+                          verticalPosition:(ASRelativeLayoutSpecPosition)verticalPosition
+                              sizingOption:(ASRelativeLayoutSpecSizingOption)sizingOption
+                 proportionForAxisPosition:(CGFloat)proportion
+                                     child:(id<ASLayoutElement>)child
+{
   if (!(self = [super init])) {
     return nil;
   }
@@ -24,6 +37,7 @@
   _horizontalPosition = horizontalPosition;
   _verticalPosition = verticalPosition;
   _sizingOption = sizingOption;
+  _proportionForAxisPosition = proportion;
   [self setChild:child];
   return self;
 }
@@ -96,6 +110,8 @@
     return 0.5f;
   } else if (position == ASRelativeLayoutSpecPositionEnd) {
     return 1.0f;
+  } else if (position == ASRelativeLayoutSpecPositionRelative) {
+    return _proportionForAxisPosition;
   } else {
     return 0.0f;
   }

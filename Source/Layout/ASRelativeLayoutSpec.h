@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, ASRelativeLayoutSpecPosition) {
   ASRelativeLayoutSpecPositionCenter = 2,
   /** The child is positioned at the maximum point of the layout axis (ie right / bottom most) */
   ASRelativeLayoutSpecPositionEnd = 3,
+  
+  ASRelativeLayoutSpecPositionRelative = 4,
 };
 
 /** 
@@ -54,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ASRelativeLayoutSpecPosition horizontalPosition;
 @property (nonatomic) ASRelativeLayoutSpecPosition verticalPosition;
 @property (nonatomic) ASRelativeLayoutSpecSizingOption sizingOption;
+@property (nonatomic) CGFloat proportionForAxisPosition;
 
 /*!
  * @discussion convenience constructor for a ASRelativeLayoutSpec
@@ -79,6 +82,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithHorizontalPosition:(ASRelativeLayoutSpecPosition)horizontalPosition
                           verticalPosition:(ASRelativeLayoutSpecPosition)verticalPosition
                               sizingOption:(ASRelativeLayoutSpecSizingOption)sizingOption
+                                     child:(id<ASLayoutElement>)child;
+
+- (instancetype)initWithHorizontalPosition:(ASRelativeLayoutSpecPosition)horizontalPosition
+                          verticalPosition:(ASRelativeLayoutSpecPosition)verticalPosition
+                              sizingOption:(ASRelativeLayoutSpecSizingOption)sizingOption
+                 proportionForAxisPosition:(CGFloat)proportion
                                      child:(id<ASLayoutElement>)child;
 
 @end
