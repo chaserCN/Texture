@@ -706,6 +706,8 @@ ASDK_EXTERN NSInteger const ASDefaultDrawingPriority;
 
 @property (null_resettable, copy) UIColor *tintColor;          // default=Blue
 
+- (nullable UIColor *)clipColor;
+
 - (void)setClipColor:(UIColor *)color;
 
 /**
